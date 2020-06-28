@@ -1,0 +1,30 @@
+---
+title: "Geomorphic analysis Northern Andes"
+output: html_notebook
+---
+```{r}
+plot( dataBasins$mean_ksn,dataBasins$mean_gradi,
+      ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
+axis(1,cex.axis=1.5)
+axis(2,cex.axis=1.5)
+mtext("Hillslope gradient [m/m]", side = 2.5, line = 3, cex = 1.5)
+mtext("Channel steepness [ksn]", side = 1, line = 3, cex = 1.5)
+arrows(dataBasins$mean_ksn, dataBasins$mean_gradi+(dataBasins$std_gradie), 
+       dataBasins$mean_ksn, dataBasins$mean_gradi-(dataBasins$std_gradie), length=0, angle=90,col='gray')
+arrows(dataBasins$mean_ksn+dataBasins$std_ksn, dataBasins$mean_gradi, 
+       dataBasins$mean_ksn-dataBasins$std_ksn, dataBasins$mean_gradi, length=0, angle=90,col='gray')
+points(dataBasins$mean_ksn,dataBasins$mean_gradi,
+       bg=dataBasins$Color,cex=1.5,pch=21)
+```
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).

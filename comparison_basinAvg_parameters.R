@@ -206,4 +206,46 @@ dev.off()
 
 
 
+plot( dataBasins$mean_ksn,dataBasins$hyp_int,
+      ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
+axis(1,cex.axis=1.5)
+axis(2,cex.axis=1.5)
+mtext("Hypsometric integral", side = 2.5, line = 3, cex = 1.5)
+mtext("Channel steepness [ksn]", side = 1, line = 3, cex = 1.5)
+arrows(dataBasins$mean_ksn, dataBasins$mean_gradi+(dataBasins$std_gradie), 
+       dataBasins$mean_ksn, dataBasins$mean_gradi-(dataBasins$std_gradie), length=0, angle=90,col='gray')
+arrows(dataBasins$mean_ksn+dataBasins$std_ksn, dataBasins$mean_gradi, 
+       dataBasins$mean_ksn-dataBasins$std_ksn, dataBasins$mean_gradi, length=0, angle=90,col='gray')
+points(dataBasins$mean_ksn,dataBasins$mean_gradi,
+       bg=dataBasins$Color,cex=1.5,pch=21)
 
+
+plot(dataBasins$mean_preci,dataBasins$hyp_int,
+      ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
+axis(1,cex.axis=1.5)
+axis(2,cex.axis=1.5)
+mtext("Hypsometric integral", side = 2.5, line = 3, cex = 1.5)
+mtext("Precipitation [m]", side = 1, line = 3, cex = 1.5)
+arrows(dataBasins$mean_ksn, dataBasins$mean_gradi+(dataBasins$std_gradie), 
+       dataBasins$mean_ksn, dataBasins$mean_gradi-(dataBasins$std_gradie), length=0, angle=90,col='gray')
+arrows(dataBasins$mean_ksn+dataBasins$std_ksn, dataBasins$mean_gradi, 
+       dataBasins$mean_ksn-dataBasins$std_ksn, dataBasins$mean_gradi, length=0, angle=90,col='gray')
+points(dataBasins$mean_ksn,dataBasins$mean_gradi,
+       bg=dataBasins$Color,cex=1.5,pch=21)
+
+boxplot(dataBasins$hyp_int ~ dataBasins$order, col= c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3'), 
+        ylab = "", xlab = "", axes = FALSE, main = NULL,lty=1,boxwex=0.2)
+axis(1,cex.axis=1,at = c(1:6),labels = c("west WC","north WC","east WC","west CC","north CC","east CC"),las=3)
+axis(2,cex.axis=1)
+mtext("Precipitation [m]", side = 2.5, line =2, cex = 1)
+
+
+mylevels <- c("westernWC","northernWC","easternWC","westernCC","northernCC","easternCC")
+levelProportions <- summary(dataBasins$location)/nrow(dataBasins)
+for(i in 1:length(mylevels)){
+  thislevel <- mylevels[i]
+  thisvalues <- dataBasins[dataBasins$location==thislevel, "mean_preci"]
+  
+  myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
+  points(myjitter, thisvalues, pch=21, bg=c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3')[i]) 
+}
