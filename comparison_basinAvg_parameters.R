@@ -34,6 +34,11 @@ lines(density(dataBasins$mean_gradi[dataBasins$location=='easternWC']))
 lines(density(dataBasins$mean_gradi[dataBasins$location=='northernWC']))
 lines(density(dataBasins$mean_gradi[dataBasins$location=='westernWC']))
 
+
+#Statistics for mean gradient
+
+
+
 # 166,206,227
 # 31,120,180
 # 178,223,138
@@ -47,6 +52,8 @@ lines(density(dataBasins$mean_gradi[dataBasins$location=='westernWC']))
 #33a02c
 #fb9a99
 
+setwd('/Users/penico93/Documents/Papers in prep/Paper Geomorphology/Methods-analysis/Geomorphology_github_repo/GeomorphologyNortherAndes')
+
 
 filename1 <- "Basin_stats.eps"
 setEPS()
@@ -58,7 +65,7 @@ par(mar=c(3, 0.5, 1.5, 0.2), mfrow=c(3,1),
     oma = c(4.5, 6, 0.2, 0.2))
 #c(bottom, left, top, right))
 
-plot( dataBasins$mean_ksn,dataBasins$mean_gradi,
+plot(dataBasins$mean_ksn,dataBasins$mean_gradi,
       ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
 axis(1,cex.axis=1.5)
 axis(2,cex.axis=1.5)
@@ -109,6 +116,72 @@ lines(density(dataBasins$mean_gradi[dataBasins$location=='westernCC']))
 lines(density(dataBasins$mean_gradi[dataBasins$location=='easternWC']))
 lines(density(dataBasins$mean_gradi[dataBasins$location=='northernWC']))
 lines(density(dataBasins$mean_gradi[dataBasins$location=='westernWC']))
+
+
+
+filename3 <- "Boxplots_northernCC.eps"
+
+setEPS()
+# 
+postscript(filename3,width=(4),height=(12))
+
+par(fig=c(0,0.8,0,0.8))
+par(mar=c(3, 0.5, 1.5, 0.2), mfrow=c(3,1),
+    oma = c(4.5, 6, 0.2, 0.2))
+#c(bottom, left, top, right))
+boxplot(dataBasins$mean_gradi ~ dataBasins$order, col= c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3'), 
+        ylab = "", xlab = "", axes = FALSE, main = NULL,lty=1,boxwex=0.2)
+axis(1,cex.axis=1,at = c(1:6),labels = c("west WC","north WC","east WC","west CC","north CC","east CC"),las=3)
+axis(2,cex.axis=1)
+mtext("Hillslope gradient", side = 2.5, line =2, cex = 1)
+
+
+mylevels <- c("westernWC","northernWC","easternWC","westernCC","northernCC","easternCC")
+levelProportions <- summary(dataBasins$location)/nrow(dataBasins)
+for(i in 1:length(mylevels)){
+  thislevel <- mylevels[i]
+  thisvalues <- dataBasins[dataBasins$location==thislevel, "mean_gradi"]
+  
+  myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
+  points(myjitter, thisvalues, pch=21, bg=c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3')[i]) 
+}
+
+boxplot(dataBasins$mean_ksn ~ dataBasins$order, col= c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3'), 
+        ylab = "", xlab = "", axes = FALSE, main = NULL,lty=1,boxwex=0.2)
+axis(1,cex.axis=1,at = c(1:6),labels = c("west WC","north WC","east WC","west CC","north CC","east CC"),las=3)
+axis(2,cex.axis=1)
+mtext("Channel steepness [ksn]", side = 2.5, line =2, cex = 1)
+
+
+mylevels <- c("westernWC","northernWC","easternWC","westernCC","northernCC","easternCC")
+levelProportions <- summary(dataBasins$location)/nrow(dataBasins)
+for(i in 1:length(mylevels)){
+  thislevel <- mylevels[i]
+  thisvalues <- dataBasins[dataBasins$location==thislevel, "mean_ksn"]
+  
+  myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
+  points(myjitter, thisvalues, pch=21, bg=c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3')[i]) 
+}
+
+boxplot(dataBasins$mean_preci ~ dataBasins$order, col= c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3'), 
+        ylab = "", xlab = "", axes = FALSE, main = NULL,lty=1,boxwex=0.2)
+axis(1,cex.axis=1,at = c(1:6),labels = c("west WC","north WC","east WC","west CC","north CC","east CC"),las=3)
+axis(2,cex.axis=1)
+mtext("Precipitation [m]", side = 2.5, line =2, cex = 1)
+
+
+mylevels <- c("westernWC","northernWC","easternWC","westernCC","northernCC","easternCC")
+levelProportions <- summary(dataBasins$location)/nrow(dataBasins)
+for(i in 1:length(mylevels)){
+  thislevel <- mylevels[i]
+  thisvalues <- dataBasins[dataBasins$location==thislevel, "mean_preci"]
+  
+  myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
+  points(myjitter, thisvalues, pch=21, bg=c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3')[i]) 
+}
+
+dev.off()
+
 
 
 
@@ -220,24 +293,25 @@ points(dataBasins$mean_ksn,dataBasins$mean_gradi,
        bg=dataBasins$Color,cex=1.5,pch=21)
 
 
-plot(dataBasins$mean_preci,dataBasins$hyp_int,
-      ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
-axis(1,cex.axis=1.5)
-axis(2,cex.axis=1.5)
-mtext("Hypsometric integral", side = 2.5, line = 3, cex = 1.5)
-mtext("Precipitation [m]", side = 1, line = 3, cex = 1.5)
-arrows(dataBasins$mean_ksn, dataBasins$mean_gradi+(dataBasins$std_gradie), 
-       dataBasins$mean_ksn, dataBasins$mean_gradi-(dataBasins$std_gradie), length=0, angle=90,col='gray')
-arrows(dataBasins$mean_ksn+dataBasins$std_ksn, dataBasins$mean_gradi, 
-       dataBasins$mean_ksn-dataBasins$std_ksn, dataBasins$mean_gradi, length=0, angle=90,col='gray')
-points(dataBasins$mean_ksn,dataBasins$mean_gradi,
-       bg=dataBasins$Color,cex=1.5,pch=21)
+
+
+
+filename3 <- "Hypsometry_boxplotandScatter2.eps"
+
+setEPS()
+# 
+postscript(filename3,width=(4),height=(8))
+
+par(fig=c(0,0.8,0,0.8))
+par(mar=c(3, 0.5, 1.5, 0.2), mfrow=c(2,1),
+    oma = c(4.5, 6, 0.2, 0.2))
+
 
 boxplot(dataBasins$hyp_int ~ dataBasins$order, col= c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3'), 
         ylab = "", xlab = "", axes = FALSE, main = NULL,lty=1,boxwex=0.2)
 axis(1,cex.axis=1,at = c(1:6),labels = c("west WC","north WC","east WC","west CC","north CC","east CC"),las=3)
 axis(2,cex.axis=1)
-mtext("Precipitation [m]", side = 2.5, line =2, cex = 1)
+mtext("Hypsometric Integral", side = 2.5, line =2, cex = 1)
 
 
 mylevels <- c("westernWC","northernWC","easternWC","westernCC","northernCC","easternCC")
@@ -249,3 +323,24 @@ for(i in 1:length(mylevels)){
   myjitter <- jitter(rep(i, length(thisvalues)), amount=levelProportions[i]/2)
   points(myjitter, thisvalues, pch=21, bg=c('#e31a1c','#fb9a99', '#33a02c', '#b2df8a', '#1f78b4', '#a6cee3')[i]) 
 }
+
+
+plot(dataBasins$mean_preci,dataBasins$hyp_int,
+     ylab = "", xlab = "", axes = FALSE, main = NULL,bg=dataBasins$Color,cex=1.5,pch=21)
+axis(1,cex.axis=1.5)
+axis(2,cex.axis=1.5)
+mtext("Hypsometric integral", side = 2.5, line = 3, cex = 1.5)
+mtext("Precipitation [m]", side = 1, line = 3, cex = 1.5)
+# arrows(dataBasins$mean_ksn, dataBasins$mean_gradi+(dataBasins$std_gradie), 
+#        dataBasins$mean_ksn, dataBasins$mean_gradi-(dataBasins$std_gradie), length=0, angle=90,col='gray')
+# arrows(dataBasins$mean_ksn+dataBasins$std_ksn, dataBasins$mean_gradi, 
+#        dataBasins$mean_ksn-dataBasins$std_ksn, dataBasins$mean_gradi, length=0, angle=90,col='gray')
+# points(dataBasins$mean_ksn,dataBasins$mean_gradi,
+#        bg=dataBasins$Color,cex=1.5,pch=21)
+
+dev.off()
+
+#Statistics of hypsometry with precipiation
+
+cor.test(dataBasins$mean_preci,dataBasins$hyp_int)
+
