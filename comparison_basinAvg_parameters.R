@@ -54,11 +54,11 @@ lines(density(dataBasins$mean_gradi[dataBasins$location=='westernWC']))
 
 setwd('/Users/penico93/Documents/Papers in prep/Paper Geomorphology/Methods-analysis/Geomorphology_github_repo/GeomorphologyNortherAndes')
 
-
-filename1 <- "Basin_stats.eps"
-setEPS()
 # 
-postscript(filename1,width=(4),height=(12))
+# filename1 <- "Basin_stats.eps"
+# setEPS()
+# # 
+# postscript(filename1,width=(4),height=(12))
 
 par(fig=c(0,0.8,0,0.8))
 par(mar=c(3, 0.5, 1.5, 0.2), mfrow=c(3,1),
